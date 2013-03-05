@@ -1,0 +1,30 @@
+easy_c 1.0
+
+library Easy_C
+library CV
+library Math
+library High_GUI
+
+routine main@Easy_C
+    takes arguments Array[String]
+    returns Integer
+
+    call d@("Hello!\n\")
+
+    if arguments.size < 2
+	call d@("usage: Example1 image-file-name\n\")
+    else
+	file_name :@= arguments[1]
+	image :@= load_image@CV(arguments[1], load_image_color@CV)
+	if image == null@CV_Image
+	    call d@(form@("Unable to read %v%\n\") / f@(file_name))
+	else
+	    window_name :@= "Example1"
+	    call named_window@CV(window_name, window_auto_size@CV)
+	    call show_image@CV(window_name, image)
+	    call wait_key@CV(0i)
+	    call release_image@CV(image)
+	    call destroy_window@CV(window_name)
+
+    return 1i
+

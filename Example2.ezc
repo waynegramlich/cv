@@ -1,0 +1,38 @@
+easy_c 1.0
+
+library Easy_C
+library CV
+library Math
+library High_GUI
+
+routine main@Easy_C
+    takes arguments Array[String]
+    returns Integer
+
+    call d@("Hello!\n\")
+
+    if arguments.size < 2
+	call d@("usage: Example2 avi_file_or_camera_digit\n\")
+    else
+	file_name :@= arguments[1]
+	window_name :@= "Example2"
+	call named_window@CV(window_name, window_auto_size@CV)
+	capture :@= null@CV_Capture
+	if file_name.size = 1 && is_decimal_digit@(file_name[0])
+	    camera_number :@= integer@(decimal_convert@(file_name[0]))
+	    capture := create_camera_capture@CV(capture_any@CV + camera_number)
+	else
+	    capture := create_file_capture@CV(file_name)
+	while 1t
+	    frame :@= query_frame@CV(capture)
+	    if frame == null@CV_Image
+		break
+	    call show_image@CV(window_name, frame)
+	    character :@= wait_key@CV(33i)
+	    if character = 27i
+		break
+	call release_capture@CV(capture)
+	call destroy_window@CV(window_name)
+
+    return 1i
+

@@ -1,0 +1,46 @@
+easy_c 1.0
+
+library Easy_C
+library CV
+library Math
+library High_GUI
+
+routine main@Easy_C
+    takes arguments Array[String]
+    returns Integer
+
+    call d@("Hello!\n\")
+
+    if arguments.size < 3
+	call d@("usage: Example3 video_in_file video_out_file\n\")
+    else
+	in_file_name :@= arguments[1]
+	out_file_name :@= arguments[2]
+	capture :@= create_file_capture@CV(in_file_name)
+	if capture == null@CV_Capture
+	    call d@(form@("Unable to open %v%\n\") / f@(in_file_name))
+	else
+	    color_frame :@= query_frame@CV(capture)
+	    fps :@= get_capture_property@CV(capture, capture_property_fps@CV)
+	    width :@= integer@(get_capture_property@CV(capture,
+	      capture_property_frame_width@CV))
+	    height :@= integer@(get_capture_property@CV(capture,
+	      capture_property_frame_height@CV))
+	    size :@= create@CV_Size(width, height)
+	    writer :@= create_video_writer@CV(out_file_name,
+	      fourcc@CV('M', 'J', 'P', 'G'), fps, size, 1i)
+
+	    count :@= 0
+	    while 1t
+		color_frame := query_frame@CV(capture)
+		if color_frame == null@CV_Image
+		    break
+		count := count + 1
+		call write_frame@CV(writer, color_frame)
+	    call d@(form@("%d% frames processed\n\") / f@(count))
+
+	    call release_video_writer@CV(writer)
+	    call release_capture@CV(capture)
+
+    return 1i
+

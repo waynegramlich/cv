@@ -1,0 +1,1160 @@
+easy_c 1.0
+
+library Easy_C
+library Math
+include "opencv/cv.h"
+require CV_C
+include "CV_C.h"
+load "-lopencv_core -lopencv_imgproc -lopencv_calib3d"
+
+# OpenCV data structures:
+define CV_Contour			# CvContour *
+    external
+
+define CV_Image				# IplImage *
+    external
+
+define CV_Matrix			# CvMat *
+    external
+
+define CV_Memory_Storage		# CvMemStorage *
+    external
+
+define CV_Point				# CvPoint *
+    external
+
+define CV_Point2D32F			# CvPoint2D32f *
+    external
+
+define CV_Point2D32F_Vector		# CvPoint2D32f *
+    external
+
+define CV_Scalar			# CvScalar *
+    external
+
+define CV_Sequence			# CvSeq *
+    external
+
+define CV_Size				# CvSize *
+    external
+
+define CV_Slice				# CvSlice *
+    external
+
+define CV_Term_Criteria			# CvTermCriteria *
+    external
+
+# null object declartions:
+external null@CV_Contour CV_Contour	# Null {CV_Contour} object
+external null@CV_Image CV_Image		# Null {CV_Image} object
+external null@CV_Memory_Storage CV_Memory_Storage # Null object
+external null@CV_Matrix CV_Matrix	# Null {CV_Matrix} object
+external null@CV_Point CV_Point		# Null {CV_Point} object
+external null@CV_Point2D32F CV_Point2D32F # Null {CV_Point2D32F} object
+external null@CV_Point2D32F_Vector CV_Point2D32F_Vector # Null
+external null@CV_Scalar CV_Scalar	# Null {CV_Scalar} object
+external null@CV_Sequence CV_Sequence	# Null {CV_Sequence} object
+external null@CV_Size CV_Size		# Null {CV_Size} object
+external null@CV_Slice CV_Slice		# Null {CV_Slice} object
+external null@CV_Term_Criteria CV_Term_Criteria	# Null {CV_Term_Criteria} object
+
+external load_image_unchanged@CV Integer # CV_LOAD_IMAGE_UNCHANGED
+external load_image_gray_scale@CV Integer # CV_LOAD_IMAGE_GRAYSCALE
+external load_image_color@CV Integer	 # CV_LOAD_IMAGE_COLOR
+external load_image_any_depth@CV Integer # CV_LOAD_IMAGE_ANYDEPTH
+external load_image_any_color@CV Integer # CV_LOAD_IMAGE_ANYCOLOR
+external window_auto_size@CV Integer	 # CV_WINDOW_AUTOSIZE
+
+external capture_any@CV Integer		# CV_CAP_ANY;
+external capture_mil@CV Integer		# CV_CAP_MIL;
+external capture_vfw@CV Integer		# CV_CAP_VFW;
+external capture_v4l@CV Integer		# CV_CAP_V4L;
+external capture_v4l2@CV Integer	# CV_CAP_V4L2;
+external capture_fireware@CV Integer	# CV_CAP_FIREWARE;
+external capture_firewire@CV Integer	# CV_CAP_FIREWARE;
+external capture_ieee1394@CV Integer	# CV_CAP_IEEE1394;
+external capture_dc1394@CV Integer	# CV_CAP_DC1394;
+external capture_cmu1394@CV Integer	# CV_CAP_CMU1394;
+external capture_stereo@CV Integer	# CV_CAP_STEREO;
+external capture_tyzx@CV Integer	# CV_CAP_TYZX;
+external tyzx_left@CV Integer		# CV_TYZX_LEFT;
+external tyzx_right@CV Integer		# CV_TYZX_RIGHT;
+external tyzx_color@CV Integer		# CV_TYZX_COLOR;
+external capture_tyzx_z@CV Integer	# CV_TYZX_Z;
+external capture_qt@CV Integer		# CV_CAP_QT;
+
+external capture_property_pos_msec @CV Integer
+external capture_property_pos_frames @CV Integer
+external capture_property_pos_avi_ratio @CV Integer
+external capture_property_frame_width @CV Integer
+external capture_property_frame_height @CV Integer
+external capture_property_fps @CV Integer
+external capture_property_fourcc @CV Integer
+external capture_property_frame_count @CV Integer
+external capture_property_format @CV Integer
+external capture_property_mode @CV Integer
+external capture_property_brightness @CV Integer
+external capture_property_contrast @CV Integer
+external capture_property_saturation @CV Integer
+external capture_property_hue @CV Integer
+external capture_property_gain @CV Integer
+external capture_property_convert_rgb@CV Integer
+
+# Image pixel depths:
+external depth_1u@CV Integer		# IPL_DEPTH_1U
+external depth_8u@CV Integer		# IPL_DEPTH_8U
+external depth_16u@CV Integer		# IPL_DEPTH_16U
+external depth_8s@CV Integer		# IPL_DEPTH_8S
+external depth_16s@CV Integer		# IPL_DEPTH_16S
+external depth_32s@CV Integer		# IPL_DEPTH_32S
+external depth_32f@CV Integer		# IPL_DEPTH_32F
+external depth_64f@CV Integer		# IPL_DEPTH_64F
+
+# OpenCV types:
+external u8@CV Integer			# CV_8U
+external s8@CV Integer			# CV_8S
+external u16@CV Integer			# CV_16U
+external s16@CV Integer			# CV_16S
+external s32@CV Integer			# CV_32S
+external f32@CV Integer			# CV_32F
+external f64@CV Integer			# CV_64F
+external user_type@CV Integer		# CV_USRTYPE1
+
+external u8c1@CV Integer		# CV_8UC1
+external u8c2@CV Integer		# CV_8UC2
+external u8c3@CV Integer		# CV_8UC3
+external u8c4@CV Integer		# CV_8UC4
+
+external s8c1@CV Integer		# CV_8SC1
+external s8c2@CV Integer		# CV_8SC2
+external s8c3@CV Integer		# CV_8SC3
+external s8c4@CV Integer		# CV_8SC4
+
+external u16c1@CV Integer		# CV_16UC1
+external u16c2@CV Integer		# CV_16UC2
+external u16c3@CV Integer		# CV_16UC3
+external u16c4@CV Integer		# CV_16UC4
+
+external s16c1@CV Integer		# CV_16SC1
+external s16c2@CV Integer		# CV_16SC2
+external s16c3@CV Integer		# CV_16SC3
+external s16c4@CV Integer		# CV_16SC4
+
+external s32c1@CV Integer		# CV_32SC1
+external s32c2@CV Integer		# CV_32SC2
+external s32c3@CV Integer		# CV_32SC3
+external s32c4@CV Integer		# CV_32SC4
+
+external f32c1@CV Integer		# CV_32FC1
+external f32c2@CV Integer		# CV_32FC2
+external f32c3@CV Integer		# CV_32FC3
+external f32c4@CV Integer		# CV_32FC4
+
+external f64c1@CV Integer		# CV_64FC1
+external f64c2@CV Integer		# CV_64FC2
+external f64c3@CV Integer		# CV_64FC3
+external f64c4@CV Integer		# CV_64FC4
+
+external auto_step@CV Integer		# CV_AUTO_STEP
+
+# {adaptive_threshold@CV}() constants:
+external adaptive_thresh_mean_c@CV Integer	# CV_ADAPTIVE_THRESH_MEAN_C
+external adaptive_thresh_gaussian_c@CV Integer	# CV_ADAPTIVE_THRESH_GAUSSIAN_C
+external thresh_binary@CV Integer		# CV_THRESH_BINARY
+external thresh_binary_inv@CV Integer		# CV_THRESH_BINARY_INV
+
+routine adaptive_threshold@CV
+    takes source_image CV_Image
+    takes destination_image CV_Image
+    takes maximum_value Double
+    takes adaptive_method Integer
+    takes threshold_type Integer
+    takes block_size Integer
+    takes parameter1 Double
+    returns_nothing
+    external CV__adaptive_threshold
+
+    # This routine will performa an adaptive threshold algorithm
+    # on {source_image} and store the result into {destination_image}.
+
+
+external poly_approx_dp@CV Integer	# CV_POLY_APPROX_DP
+
+routine approx_poly@CV
+    takes contour CV_Sequence
+    takes header_size Integer
+    takes storage CV_Memory_Storage
+    takes method Integer
+    takes parameter1 Integer
+    takes parameter2 Double
+    returns CV_Sequence
+    external CV__approx_poly
+
+    # This routine will invoke cvApproxPoly().
+
+
+external whole_seq@CV CV_Slice		# CV_WHOLE_SEQ
+
+routine arc_length@CV
+    takes contour CV_Sequence
+    takes slice CV_Slice
+    takes is_closed Integer
+    returns Double
+    external CV__arc_length
+
+    # This routine will invoke cvArcLength().
+
+
+routine calibrate_camera2@CV
+    takes object_points CV_Matrix
+    takes image_points CV_Matrix
+    takes point_counts CV_Matrix
+    takes image_size CV_Size
+    takes camera_matrix CV_Matrix
+    takes distortion_coefficients CV_Matrix
+    takes rotation_vectors CV_Matrix
+    takes translation_vectors CV_Matrix
+    takes flags Integer
+    returns_nothing
+    external CV__calibrate_camera2
+
+    # This routine will invoke cvCalibrateCamera2().
+
+routine check_contour_convexity@CV
+    takes contour CV_Sequence
+    returns Logical
+    external CV__check_contour_convexity
+
+    # This routine will return {true} if {contour} is convex and {false}
+    # otherwise.
+
+
+routine clear_mem_storage@CV
+    takes storage CV_Memory_Storage
+    returns_nothing
+    external CV__clear_mem_storage	
+
+    # This routine will create and return a new {CV_Memory_Storage} object.
+
+
+routine clone_image@CV
+    takes image CV_Image
+    returns CV_Image
+    external CV__clone_image
+
+    # This routine will return a cloned copy of {image}.
+
+
+routine contour_area@CV
+    takes contour CV_Sequence
+    takes slice CV_Slice
+    takes oriented Integer
+    returns Double
+    external CV__contour_area
+
+    # This routine will return the area of {contour} for {slice}.  A negative
+    # result is possible.
+    
+
+routine copy@CV
+    takes source_image CV_Image
+    takes destination_image CV_Image
+    takes mask CV_Image
+    returns_nothing
+    external CV__copy
+
+    # This routine will copy the contents of {source_image} into
+    # {destination_image} with {mask} controlling which elements
+    # are copied.  If {mask} is {null@CV_Image}, a simple copy is
+    # performed.
+
+
+routine create_image@CV
+    takes size CV_Size
+    takes depth Integer
+    takes channels Integer
+    returns CV_Image
+    external CV__create_image
+
+    # This routine will create and return a new image.
+
+
+routine create_mat@CV
+    takes rows Integer
+    takes columns Integer
+    takes type Integer
+    returns CV_Matrix
+    external cvCreateMat
+
+    # This routine will create and return a {rows} by {columns} matrix
+    # of type {type}.  Type must be one of {u8cN@CV}, {s8cN@CV}, {u16cN@CV},
+    # {s16cN@CV}, {s32cN@CV}, {f32@cN@CV}, of {f64Cn@CV}, where N is 1, 2,
+    #, 3, or 4, for the number of channels.
+
+routine create_mem_storage@CV
+    takes block_size Integer
+    returns CV_Memory_Storage
+    external cvCreateMemStorage
+
+    # This routine will create and return a new {CV_Memory_Storage} object.
+
+
+routine cvt_color@CV
+    takes source_image CV_Image
+    takes destinaton_image CV_Image
+    takes conversion_code Integer
+    returns_nothing
+    external CV__cvt_color
+
+    # This routine will copy {sourc_image} into {destination_image}
+    # converting the color representation using {convertion_code}.
+
+
+# {conversion_code} codes for {cvt_color@CV}:
+external bgr_to_bgra@CV Integer		# CV_BGR2BGRA
+external rgb_to_rgba@CV Integer		# CV_RGB2RGBA
+external bgra_to_bgr@CV Integer		# CV_BGRA2BGR
+external rgba_to_rgb@CV Integer		# CV_RGBA2RGB
+external bgr_to_rgba@CV Integer		# CV_BGR2RGBA
+external rgb_to_bgra@CV Integer		# CV_RGB2BGRA
+external rgba_to_bgr@CV Integer		# CV_RGBA2BGR
+external bgra_to_rgb@CV Integer		# CV_BGRA2RGB
+external bgr_to_rgb@CV Integer		# CV_BGR2RGB
+external rgb_to_bgr@CV Integer		# CV_RGB2BGR
+external brga_to_rgba@CV Integer	# CV_BGRA2RGBA
+external rgba_to_brga@CV Integer	# CV_RGBA2BGRA
+external bgr_to_gray@CV Integer		# CV_BGR2GRAY
+external rgb_to_gray@CV Integer		# CV_RGB2GRAY
+external gray_to_brg@CV Integer		# CV_GRAY2BGR
+external gray_to_rgb@CV Integer		# CV_GRAY2RGB
+external gray_to_bgra@CV Integer	# CV_GRAY2BGRA
+external gray_to_rgba@CV Integer	# CV_GRAY2RGBA
+external brga_to_gray@CV Integer	# CV_BGRA2GRAY
+external rgba_to_gray@CV Integer	# CV_RGBA2GRAY
+external bgr_to_bgr565@CV Integer	# CV_BGR2BGR565
+external rgb_to_bgr565@CV Integer	# CV_RGB2BGR565
+external bgr565_to_bgr@CV Integer	# CV_BGR5652BGR
+external bg4565_to_rgb@CV Integer	# CV_BGR5652RGB
+external bgra_to_bgr565@CV Integer	# CV_BGRA2BGR565
+external rgba_to_bgr565@CV Integer	# CV_RGBA2BGR565
+external bgr565_to_bgra@CV Integer	# CV_BGR5652BGRA
+external bgr565_to_rgba@CV Integer	# CV_BGR5652RGBA
+external gray_to_bgr565@CV Integer	# CV_GRAY2BGR565
+external bgr565_to_gray@CV Integer	 # CV_BGR5652GRAY
+external bgr_to_bgr555@CV Integer	# CV_BGR2BGR555
+external rgb_to_bgr555@CV Integer	# CV_RGB2BGR555
+external bgr555_to_bgr@CV Integer	# CV_BGR5552BGR
+external bgr555_to_rgb@CV Integer	# CV_BGR5552RGB
+external bgra_to_bgr555@CV Integer	# CV_BGRA2BGR555
+external rgba_to_bgr555@CV Integer	# CV_RGBA2BGR555
+external bgr555_to_bgra@CV Integer	# CV_BGR5552BGRA
+external bgr555_to_rgba@CV Integer	# CV_BGR5552RGBA
+external gray_to_bgr555@CV Integer	# CV_GRAY2BGR555
+external bgr555_to_gray@CV Integer	# CV_BGR5552GRAY
+external bgr_to_xyz@CV Integer		# CV_BGR2XYZ
+external rgb_to_xyz@CV Integer		# CV_RGB2XYZ
+external xyz_to_bgr@CV Integer		# CV_XYZ2BGR
+external xyz_to_rgb@CV Integer		# CV_XYZ2RGB
+external bgr_to_ycrcb@CV Integer	# CV_BGR2YCrCb
+external rgb_to_ycrcb@CV Integer	# CV_RGB2YCrCb
+external ycrcb_to_bgr@CV Integer	# CV_YCrCb2BGR
+external ycrcb_to_rgb@CV Integer	# CV_YCrCb2RGB
+external bgr_to_hsv@CV Integer		# CV_BGR2HSV
+external rgb_to_hsv@CV Integer		# CV_RGB2HSV
+external bgr_to_lab@CV Integer		# CV_BGR2Lab
+external rgb_to_lab@CV Integer		# CV_RGB2Lab
+external bayerbg_to_bgr@CV Integer	# CV_BayerBG2BGR
+external bayergb_to_bgr@CV Integer	# CV_BayerGB2BGR
+external bayerrg_to_bgr@CV Integer	# CV_BayerRG2BGR
+external bayergr_to_bgr@CV Integer	# CV_BayerGR2BGR
+external bayerbg_to_rgb@CV Integer	# CV_BayerBG2RGB
+external bayergb_to_rgb@CV Integer	# CV_BayerGB2RGB
+external bayerrg_to_rgb@CV Integer	# CV_BayerRG2RGB
+external bayergr_to_rgb@CV Integer	# CV_BayerGR2RGB
+external bgr_to_luv@CV Integer		# CV_BGR2Luv
+external rgb_to_luv@CV Integer		# CV_RGB2Luv
+external bgr_to_hls@CV Integer		# CV_BGR2HLS
+external rgb_to_hls@CV Integer		# CV_RGB2HLS
+external hsv_to_bgr@CV Integer		# CV_HSV2BGR
+external hsv_to_rgb@CV Integer		# CV_HSV2RGB
+external lab_to_bgr@CV Integer		# CV_Lab2BGR
+external lab_to_rgb@CV Integer		# CV_Lab2RGB
+external luv_to_bgr@CV Integer		# CV_Luv2BGR
+external luv_to_rgb@CV Integer		# CV_Luv2RGB
+external hls_to_bgr@CV Integer		# CV_HLS2BGR
+external hls_to_rgb@CV Integer		# CV_HLS2RGB
+
+routine draw_chessboard_corners@CV
+    takes image CV_Image
+    takes pattern_size CV_Size
+    takes corners CV_Point2D32F_Vector
+    takes count Integer
+    takes pattern_was_found Logical
+    returns_nothing    
+    external CV__draw_chessboard_corners
+
+    # This routine will invoke cvDrawChessboardCorners().
+
+routine draw_contours@CV
+    takes image CV_Image
+    takes contour CV_Sequence
+    takes external_Color CV_Scalar
+    takes hole_color CV_Scalar
+    takes maximal_level Integer
+    takes thickness Integer
+    takes line_type Integer
+    takes offset CV_Point
+    returns_nothing
+    external CV__draw_contours
+
+    # This routine will draw {contour} into {image} with external
+    # contours colored in {external_color} and the internal contours
+    # colored in {hole_color}.  {thickness} specifies the line thickness.
+    # {line_type} specifies how the line is drawn.
+    #
+    # {maximal_level}: If 0, only {contour} is drawn.  If 1, the contour
+    # and all contours following it on the same level are drawn. If 2,
+    # all contours following and all contours one level below the contours
+    # are drawn, and so forth. If the value is negative, the function
+    # does not draw the contours following after contour but draws the
+    # child contours of contour up to the |{maximal_level}| - 1  level.
+
+external calib_cb_adaptive_thresh@CV Integer	# CV_CALIB_CB_ADAPTIVE_THRESH
+external calib_cb_normalize_image@CV Integer	# CV_CALIB_CB_NORMALIZE_IMAGE
+external calib_cb_filter_quads@CV Integer	# CV_CALIB_CB_FILTER_QUADS
+
+routine find_chessboard_corners@CV
+    takes image CV_Image
+    takes pattern_size CV_Size
+    takes corners CV_Point2D32F_Vector
+    takes flags Integer
+    returns Integer
+    external CV__find_chessboard_corners
+
+    # This routine will invoke cvFindChessboardCorner().  There is
+    # a slight difference.  This routine will return if
+    # cvFindChessboardCorner() returns 0, and the non-zero
+    # corner count otherwise.
+
+# {mode} constants:
+external retr_external@CV Integer	# CV_RETR_EXTERNAL
+external retr_list@CV Integer		# CV_RETR_LIST
+external retr_ccomp@CV Integer		# CV_RETR_CCOMP
+external retr_tree@CV Integer		# CV_RETR_TREE
+
+# {method} constants:
+external chain_code@CV Integer		# CV_CHAIN_CODE
+external chain_approx_none@CV Integer	# CV_CHAIN_APPROX_NONE
+external chain_approx_simple@CV Integer	# CV_CHAIN_APPROX_SIMPLE
+external chain_approx_tc89_l1@CV Integer # CV_CHAIN_APPROX_TC89_L1
+external chain_approx_tc89_kcos@CV Integer # CV_CHAIN_APPROX_TC89_KCOS
+external chain_link_runs@CV Integer	# CV_LINK_RUNS
+
+routine find_contours@CV
+    takes image CV_Image
+    takes storage CV_Memory_Storage
+    takes header_size Integer
+    takes mode Integer    
+    takes method Integer
+    takes point CV_Point
+    returns CV_Sequence
+    external CV__find_contours
+
+    # This routine will invoke cvFindContours() and return the resulting
+    # {CV_Sequence} object.
+
+
+routine find_corner_sub_pix@CV
+    takes image CV_Image
+    takes corners CV_Point2D32F_Vector
+    takes count Integer
+    takes window CV_Size
+    takes zero_zone CV_Size
+    takes criteria CV_Term_Criteria
+    returns_nothing
+    external CV__find_corner_sub_pix
+
+    # This routine will call cvFindCornerSubPix().
+
+routine find_extrinsic_camera_params2@CV
+    takes object_points CV_Matrix
+    takes image_points CV_Matrix
+    takes camera CV_Matrix
+    takes distortion_coefficients CV_Matrix
+    takes rotation_vector CV_Matrix
+    takes translation_vector CV_Matrix
+    takes use_extrinsic_guess Integer
+    returns_nothing
+    external CV__find_extrinsic_camera_params2
+
+    # This routine will invoke cvFindExtrinsicCameraParams2().
+
+routine fourcc@CV
+    takes character1 Character
+    takes character1 Character
+    takes character1 Character
+    takes character1 Character
+    returns Integer
+    external CV__fourcc
+
+    # This routine will combine {character1}, {character2}, {character3},
+    # and {character4} into a single 32-bit {Integer} and return it.
+
+external gemm_a_t@CV Integer		# CV_GEMM_A_T
+external gemm_b_t@CV Integer		# CV_GEMM_B_T
+external gemm_c_t@CV Integer		# CV_GEMM_C_T
+
+routine gemm@CV
+    takes a CV_Matrix
+    takes b CV_Matrix
+    takes alpha Double
+    takes c CV_Matrix
+    takes beta Double
+    takes d CV_Matrix
+    takes transpose_a_b_c Integer
+    returns_nothing
+    external CV__gemm
+
+    # This routine computes {d := alpha*op(A) x beta*op(B) + op(C)},
+    # where "*" is a scalar multiply, "x" is a matrix multiply, and "+"
+    # is matrix add.  op(A), op(B), and op(C) are optional matrix
+    # transpose operations enabled by {transpose_a_b_c}.
+
+routine get_real_2d@CV
+    takes matrix CV_Matrix
+    takes row Integer
+    takes column Integer
+    returns Double
+    external CV__get_real_2d
+
+    # This routine will return {matrix[row, column]} as a {Double}.
+
+
+routine init_undistort_map@CV
+    takes camera_matrix CV_Matrix
+    takes distortion_coefficients CV_Matrix
+    takes mapx CV_Matrix
+    takes mapy CV_Matrix
+    returns_nothing
+    external CV__init_undistort_map
+
+    # This routine will call cvInitUndistorMap().
+
+
+routine load@CV
+    takes file_name String
+    takes memory_storage CV_Memory_Storage
+    takes name String
+    takes real_name String
+    returns CV_Matrix
+    external CV__load
+
+    # This routine will load the matrix stored in {file} name.  All allocated
+    # memory for the object comes from {memory_storage} (which can be null).
+    # {name} and {real_name} are used to select named matrices.
+    
+
+routine release_image@CV
+    takes image CV_Image
+    returns_nothing
+    external CV__release_image
+
+    # This routine will release the storage associated with {image}.
+
+
+external inter_linear@CV Integer	# CV_INTER_LINEAR
+external warp_fill_outliers@CV Integer	# CV_WARP_FILL_OUTLIERS
+
+routine remap@CV
+    takes source_image CV_Image
+    takes destination_image CV_Image
+    takes mapx CV_Matrix
+    takes mapy CV_Matrix
+    takes flags Integer
+    takes fill_value CV_Scalar
+    returns_nothing
+    external CV__remap
+
+    # This routine will invoke cvRemap().
+
+routine rodrigues2@CV
+    takes rotation_vector CV_Matrix
+    takes rotation_matrix CV_Matrix
+    takes jacobian CV_Matrix
+    returns_nothing
+    external CV__rodrigues2
+
+    # This routine will call cvRodrigues2().
+
+routine round@CV
+    takes value Double
+    returns Integer
+    external cvRound
+
+    # This routine will return {value} a rounded to the nearest integer.
+
+routine set_identity@CV
+    takes matrix CV_Matrix
+    takes scalar CV_Scalar
+    returns_nothing
+    external CV__set_identity
+
+    # This routine will set {matrix} to all zeros, and then set all of
+    # the diagonal elements to {scalar}.
+
+routine set_real_2d@CV
+    takes matrix CV_Matrix
+    takes row Integer
+    takes column Integer
+    takes value Double
+    returns_nothing
+    external CV__set_real_2d
+
+    # This routine will set {matrix[row, column]} to {value}.
+
+routine set_zero@CV
+    takes matrix CV_Matrix
+    returns_nothing
+    external CV__set_zero
+
+    # This routine will zero out {matrix}.
+
+external blur_no_scale@CV Integer	# CV_BLUR_NO_SCALE
+external blur@CV Integer		# CV_BLUR
+external gaussian@CV Integer		# CV_GAUSSIAN
+external median@CV Integer		# CV_MEDIAN
+external bilateral@CV Integer		# CV_BILATERAL
+
+routine smooth@CV
+    takes source_image CV_Image
+    takes destination_image CV_Image
+    takes smooth_type Integer
+    takes parameter1 Integer
+    takes parameter2 Integer
+    takes parameter3 Double
+    takes parameter4 Double
+    returns_nothing
+
+    # This routine will smooth 
+
+
+# {CV_Image} routines:
+
+routine channels_get@CV_Image
+    takes image CV_Image
+    returns Integer
+    external CV_Image__channels_get
+    
+    # This routien will return the number of channels associated with {image}
+
+
+routine cross_draw@CV_Image
+    takes image CV_Image
+    takes x Integer
+    takes y Integer
+    takes color CV_Scalar
+    returns_nothing
+    external CV_Image__cross_draw
+
+    # This routine will draw a {color}'ed cross at ({x},{y}) in {image}.
+
+
+routine depth_get@CV_Image
+    takes image CV_Image
+    returns Integer
+    external CV_Image__depth_get
+
+    # This routine will return the bit depth of {image}.
+
+
+routine fetch3@CV_Image
+    takes image CV_Image
+    takes x Unsigned
+    takes y Unsigned
+    takes channel Unsigned
+    returns Unsigned
+    external CV_Image__fetch3
+
+    # This routine will return the {channel}'th byte from location ({x},{y}) in
+    # {image}.
+
+
+routine gray_fetch@CV_Image
+    takes image CV_Image
+    takes x Integer
+    takes y Integer
+    returns Integer
+    external CV_Image__gray_fetch
+
+    # This routine will fetch the value from {image} at location ({x}, {y})
+    # and return it.  {image} must refer to a gray scale image.  If ({x}, {y})
+    # is out of bounds, -1 is returned.
+
+
+routine height_get@CV_Image
+    takes image CV_Image
+    returns Integer
+    external CV_Image__height_get
+
+    # This routine will return the height of {image}.
+
+
+routine store3@CV_Image
+    takes image CV_Image
+    takes x Unsigned
+    takes y Unsigned
+    takes channel Unsigned
+    takes value Unsigned
+    returns_nothing
+    external CV_Image__store3
+
+    # This routine will store {value} into  the {channel}'th byte at  location
+    # ({x},{y}) in {image}.
+
+
+routine tga_read@CV_Image
+    takes image CV_Image
+    takes tga_file_name String
+    returns CV_Image
+
+    # This routine will read the contents of {tga_file_name} into
+    # {image}.  If the sizes do not match, {image} is released
+    # and new {CV_Image} object of the right size is allocated,
+    # filled and returned.  In either case, the returned {CV_Image}
+    # object containing the read in image data is returned.
+
+    # Open {tga_in_stream}:
+    tga_in_stream :@= open@In_Stream(tga_file_name)
+    if tga_in_stream == null@In_Stream
+	call d@(form@("Unable to open %v% for reading\n\") / f@(tga_file_name))
+	assert 0f
+
+    # Read .tga header from {tga_in_stream}:
+    call byte_get@(tga_in_stream)			# identsize
+    call byte_get@(tga_in_stream)			# colourmaptype
+    image_type :@= byte_get@(tga_in_stream)		# imagetype (3=>raw b&w)
+    call little_endian_short_get@(tga_in_stream)	# colourmapstart
+    call little_endian_short_get@(tga_in_stream)	# colourmaplength
+    call byte_get@(tga_in_stream)			# colourmapbits
+    call little_endian_short_get@(tga_in_stream)	# xstart
+    call little_endian_short_get@(tga_in_stream)	# ystart
+    width :@= little_endian_short_get@(tga_in_stream)	# width
+    height :@= little_endian_short_get@(tga_in_stream)	# height
+    bpp :@= byte_get@(tga_in_stream)			# bits per pixel
+    call byte_get@(tga_in_stream)			# descriptor
+
+    # Compare {image_type}, {bpp}, {width} and {height} with {image}.
+    if image !== null@CV_Image && unsigned@(image.width) = width &&
+      unsigned@(image.height) = height && unsigned@(image.depth) = 8
+	# {width}, {height}, and {depth} match {image}:
+	channels :@= unsigned@(image.channels)
+	if image_type = 3 && channels = 1 && bpp = 8
+	    # We have a gray mode .tga match:
+	    do_nothing
+	else_if image_type = 2 && channels = 3 && bpp = 24
+	    # We have a color mode .tga file:
+	    do_nothing
+	else
+	    # No match:
+	    call release_image@CV(image)
+	    image := null@CV_Image
+    else
+	call release_image@CV(image)
+	image := null@CV_Image
+    # If {image} is not equal to {null@CV_Image} we can reuse {image}:
+
+    # Figure out whether .tga file is gray scale or color:
+    gray_mode :@= 0f
+    if image_type = 3 && bpp = 8
+	gray_mode := 1t
+    else_if image_type = 2 && bpp = 24
+	# Color mode:
+	do_nothing
+    else
+	# Something else:
+	call d@(form@("%v% has image type=%d% and bpp=%d%\n\") %
+	  f@(tga_file_name) % f@(image_type) / f@(bpp))
+	assert 0f
+
+    # Allocate a new {image} if we need to:
+    if image == null@CV_Image
+	size :@= create@CV_Size(integer@(width), integer@(height))
+	if gray_mode
+	    image := create_image@CV(size, 8i, 1i)
+	else
+	    image := create_image@CV(size, 8i, 3i)
+
+    # Read the .tga data into {image}:
+    row :@= 0
+    while row < height
+	j :@= height - row - 1
+	column :@= 0
+	while column < width
+	    i :@= column
+	    if gray_mode
+		gray :@= byte_get@(tga_in_stream)
+		call store3@(image, column, row, 0, gray)
+	    else
+		red :@= byte_get@(tga_in_stream)
+		green :@= byte_get@(tga_in_stream)
+		blue :@= byte_get@(tga_in_stream)
+		call store3@(image, i, j, 0, red)
+		call store3@(image, i, j, 1, green)
+		call store3@(image, i, j, 2, blue)
+	    column := column + 1
+	row := row + 1
+
+    # Close {tga_in_stream}:
+    call close@(tga_in_stream)
+
+    return image
+
+
+routine tga_write@CV_Image
+    takes image CV_Image
+    takes file_name String
+    returns_nothing
+
+    # This routine will write {image} out to {file_name} in .tga format.
+
+    channels :@= unsigned@(image.channels)
+    depth :@= unsigned@(image.depth)
+    height :@= unsigned@(image.height)
+    width :@= unsigned@(image.width)
+    assert depth = 8
+
+    bpp :@= 0
+    image_type :@= 0	# 2=>color; 3=>b&w:
+    gray_mode :@= 0f
+    if channels = 1
+	# Gray scale:
+	bpp := 8
+	gray_mode := 1t
+	image_type := 3
+    else_if channels = 3
+	# Color
+	bpp := 24
+	gray_mode := 0f
+	image_type := 2
+    else
+	assert 0f
+
+    # Open {file_name} file for writing:
+    tga_out_stream :@= open@Out_Stream(file_name)
+    if tga_out_stream == null@Out_Stream
+	call d@(form@("Could not open %v% for writing.\n\") / f@(file_name))
+	assert 0f
+
+    # Write .tga header:
+    call byte_put@(tga_out_stream, 0)			# identsize
+    call byte_put@(tga_out_stream, 0)			# colourmaptype
+    call byte_put@(tga_out_stream, image_type)		# imagetype (3=>raw b&w)
+    call little_endian_short_put@(tga_out_stream, 0)	# colourmapstart
+    call little_endian_short_put@(tga_out_stream, 0)	# colourmaplength
+    call byte_put@(tga_out_stream, 0)			# colourmapbits
+    call little_endian_short_put@(tga_out_stream, 0)	# xstart
+    call little_endian_short_put@(tga_out_stream, 0)	# ystart
+    call little_endian_short_put@(tga_out_stream, width) # width
+    call little_endian_short_put@(tga_out_stream, height) # height
+    call byte_put@(tga_out_stream, bpp)			# bits per pixel
+    call byte_put@(tga_out_stream, 0)			# descriptor
+
+    # Write out the .tga file data:
+    row :@= 0
+    while row < height
+	j :@= height - row - 1
+	column :@= 0
+	while column < width
+	    i :@= column
+	    if gray_mode
+		call byte_put@(tga_out_stream, fetch3@(image, i, j, 0))
+	    else
+		index :@= height - row - 1
+		red :@= fetch3@(image, i, j, 0)
+		green :@= fetch3@(image, i, j, 1)
+		blue :@= fetch3@(image, i, j, 2)
+		call byte_put@(tga_out_stream, red)
+		call byte_put@(tga_out_stream, green)
+		call byte_put@(tga_out_stream, blue)
+	    column := column + 1
+	row := row + 1
+
+    # Close the .tga file:
+    call close@(tga_out_stream)
+
+
+routine width_get@CV_Image
+    takes image CV_Image
+    returns Integer
+    external CV_Image__width_get
+
+    # This routine will return the width of {image}.
+
+
+# {CV_Matrix} routines:
+
+routine columns_get@CV_Matrix
+    takes matrix CV_Matrix
+    returns Integer
+    external CV_Matrix__columns_get
+
+    # This routine will return the number of columns of {matrix}.
+
+
+routine rows_get@CV_Matrix
+    takes matrix CV_Matrix
+    returns Integer
+    external CV_Matrix__rows_get
+
+    # This routine will return the number of rows of {matrix}.
+
+
+routine save@CV_Matrix
+    takes matrix CV_Matrix
+    takes file_name String
+    returns_nothing
+    external CV_Matrix__save
+
+    # This routine will save {matrix} to {file_name}.
+
+# {CV_Point} routines:
+
+routine create@CV_Point
+    takes x Integer
+    takes y Integer
+    returns CV_Point
+    external CV_Point__create
+
+    # This routine will create and return a {CV_Point} object that
+    # contains {x}, and {y}.
+
+
+routine x_get@CV_Point
+    takes point CV_Point
+    returns Integer
+    external CV_Point__x_get
+
+    # This routine will return the x field of {point}.
+
+routine x_set@CV_Point
+    takes point CV_Point
+    takes x Integer
+    returns_nothing
+    external CV_Point__x_set
+
+    # This routine will set the x field of {point} to {x}.
+
+routine y_get@CV_Point
+    takes point CV_Point
+    returns Integer
+    external CV_Point__y_get
+
+    # This routine will return the y field of {point}.
+
+routine y_set@CV_Point
+    takes point CV_Point
+    takes y Integer
+    returns_nothing
+    external CV_Point__y_set
+
+    # This routine will set the y field of {point} to {y}.
+
+
+# {CV_Point2D32F} routines:
+
+routine create@CV_Point2D32F
+    takes x Double
+    takes y Double
+    returns CV_Point2D32F
+    external CV_Point2D32F__create
+
+    # This routine will create and return a {CV_Point2D32F} object that
+    # contains {x} and {y}.
+
+
+routine f@CV_Point2D32F
+    takes point CV_Point2D32F
+    returns String
+
+    # This routine will format {point} as a string.
+
+    value :@= field_next@Format()
+    call trim@(value, 0)
+    call string_append@(value, form@("(%f%,%f%)") % f@(point.x) / f@(point.y))
+    return value
+
+
+routine point_set@CV_Point2D32F
+    takes point2d32f CV_Point2D32F
+    takes point CV_Point
+    returns_nothing
+
+    # This routine will copy the contents of {point} into {point2d32f}.
+    
+    call x_set@(point2d32f, double@(point.x))
+    call y_set@(point2d32f, double@(point.y))
+
+
+routine x_get@CV_Point2D32F
+    takes point CV_Point2D32F
+    returns Double
+    external CV_Point2D32F__x_get
+
+    # This routine will return the x field of {point}.
+
+routine x_set@CV_Point2D32F
+    takes point CV_Point2D32F
+    takes x Double
+    returns_nothing
+    external CV_Point2D32F__x_set
+
+    # This routine will set the x field of {point} to {x}.
+
+routine y_get@CV_Point2D32F
+    takes point CV_Point2D32F
+    returns Double
+    external CV_Point2D32F__y_get
+
+    # This routine will return the y field of {point}.
+
+routine y_set@CV_Point2D32F
+    takes point CV_Point2D32F
+    takes y Double
+    returns_nothing
+    external CV_Point2D32F__y_set
+
+    # This routine will set the y field of {point} to {y}.
+
+
+# {CV_Point2D32F_Vector} routines:
+
+routine create@CV_Point2D32F_Vector
+    takes size Unsigned
+    returns CV_Point2D32F_Vector
+    external CV_Point2D32F_Vector__create
+
+    # This routine will create and return a {CV_Point2D32F_Vector} object
+    # with slots for {size} {CV_Point2D32F} objects.
+
+
+routine f@CV_Point2D32F_Vector
+    takes vector CV_Point2D32F_Vector
+    returns String
+
+    # This routine will format {vector} as a string.
+
+    value :@= field_next@Format()
+    call trim@(value, 0)
+    prefix :@= '['
+    index :@= 0
+    while index < 4
+	call character_append@(value, prefix)
+	prefix := ','
+	call string_append@(value, form@("%v%") / f@(vector[index]))
+	index := index + 1
+    call character_append@(value, ']')
+    return value
+
+
+routine fetch1@CV_Point2D32F_Vector
+    takes vector CV_Point2D32F_Vector
+    takes index Unsigned
+    returns CV_Point2D32F
+    external CV_Point2D32F_Vector__fetch1
+
+    # This routine will return the {index}'th {CV_Point2D32F} object
+    # from {vector}.
+
+
+# {CV_Scalar} routines:
+
+routine create@CV_Scalar
+    takes value0 Double
+    takes value1 Double
+    takes value2 Double
+    takes value3 Double
+    returns CV_Scalar
+    external CV_Scalar__create
+
+    # This routine will create and return a {CV_Scalar} object that
+    # contains {value0}, {value1}, {value2}, and {value3}.
+
+
+routine rgb@CV_Scalar
+    takes red Double
+    takes green Double
+    takes blue Double
+    returns CV_Scalar
+
+    # This routine will return a {CV_Scalar} that encodes {red}, {green},
+    # and {blue} as a color.
+
+    return create@CV_Scalar(blue, green, red, 0.0)
+
+
+# {CV_Sequence} routines:
+
+routine next_get@CV_Sequence
+    takes sequence CV_Sequence
+    returns CV_Sequence
+    external CV_Sequence__next_get
+
+    # This routine will return the next sequence after {sequence}.
+
+
+routine point_fetch@CV_Sequence
+    takes sequence CV_Sequence
+    takes index Unsigned
+    returns CV_Point
+    external CV_Sequence__point_fetch
+
+    # This routine will return the {CV_Point} object associated with
+    # {index}'th slot in {sequence}.
+
+
+routine total_get@CV_Sequence
+    takes sequence CV_Sequence
+    returns Integer
+    external CV_Sequence__total_get
+
+    # This routine will return the total for {sequence}.
+
+
+# {CV_Size} routines:
+
+routine create@CV_Size
+    takes width Integer
+    takes height Integer
+    returns CV_Size
+    external CV_Size__create
+
+    # This routine will create and return a new {CV_Size} object containing
+    # {width} and {height}.
+
+
+# {CV_Slice} routines:
+
+routine create@CV_Slice
+    takes start_index Integer
+    takes end_index Integer
+    returns CV_Slice
+    external CV_Slice__create
+
+    # This routine will create and return a {CV_Slice} object that contains
+    # {start_index} and {end_index}.
+
+# {CV_Term_Criteria} routines:
+
+external term_criteria_iterations@CV Integer	# CV_TERMCRIT_ITER
+external term_criteria_eps@CV Integer		# CV_TERMCRIT_EPS
+
+routine create@CV_Term_Criteria
+    takes type Integer
+    takes maximum_iterations Integer
+    takes epsilon Double
+    returns CV_Term_Criteria
+    external CV_Term_Criteria__create
+
+    # This routine will create and return a {CV_Term_Criteria} object that
+    # contains {type}, {maximum_iterations}, and {epsilon}.
+
