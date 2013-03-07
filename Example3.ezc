@@ -3,7 +3,7 @@ easy_c 1.0
 library Easy_C
 library CV
 library Math
-library High_GUI
+library High_GUI2
 
 routine main@Easy_C
     takes arguments Array[String]
@@ -20,27 +20,27 @@ routine main@Easy_C
 	if capture == null@CV_Capture
 	    call d@(form@("Unable to open %v%\n\") / f@(in_file_name))
 	else
-	    color_frame :@= query_frame@CV(capture)
-	    fps :@= get_capture_property@CV(capture, capture_property_fps@CV)
-	    width :@= integer@(get_capture_property@CV(capture,
-	      capture_property_frame_width@CV))
-	    height :@= integer@(get_capture_property@CV(capture,
-	      capture_property_frame_height@CV))
+	    color_frame :@= query_frame@(capture)
+	    fps :@= get_capture_property@(capture, property_fps@CV_Capture)
+	    width :@= integer@(get_capture_property@(capture,
+	      property_frame_width@CV_Capture))
+	    height :@= integer@(get_capture_property@(capture,
+	      property_frame_height@CV_Capture))
 	    size :@= create@CV_Size(width, height)
 	    writer :@= create_video_writer@CV(out_file_name,
 	      fourcc@CV('M', 'J', 'P', 'G'), fps, size, 1i)
 
 	    count :@= 0
 	    while 1t
-		color_frame := query_frame@CV(capture)
+		color_frame := query_frame@(capture)
 		if color_frame == null@CV_Image
 		    break
 		count := count + 1
-		call write_frame@CV(writer, color_frame)
+		call write_frame@(writer, color_frame)
 	    call d@(form@("%d% frames processed\n\") / f@(count))
 
-	    call release_video_writer@CV(writer)
-	    call release_capture@CV(capture)
+	    call release_video_writer@(writer)
+	    call release_capture@(capture)
 
     return 1i
 

@@ -3,7 +3,7 @@ easy_c 1.0
 library Easy_C
 library CV
 library Math
-library High_GUI
+library High_GUI2
 
 routine main@Easy_C
     takes arguments Array[String]
@@ -21,17 +21,21 @@ routine main@Easy_C
 	if file_name.size = 1 && is_decimal_digit@(file_name[0])
 	    camera_number :@= integer@(decimal_convert@(file_name[0]))
 	    capture := create_camera_capture@CV(capture_any@CV + camera_number)
+	    call set_capture_property@(capture,
+	      property_frame_width@CV_Capture, double@(640))
+	    call set_capture_property@(capture,
+	      property_frame_height@CV_Capture, double@(480))
 	else
 	    capture := create_file_capture@CV(file_name)
 	while 1t
-	    frame :@= query_frame@CV(capture)
+	    frame :@= query_frame@(capture)
 	    if frame == null@CV_Image
 		break
 	    call show_image@CV(window_name, frame)
 	    character :@= wait_key@CV(33i)
 	    if character = 27i
 		break
-	call release_capture@CV(capture)
+	call release_capture@(capture)
 	call destroy_window@CV(window_name)
 
     return 1i

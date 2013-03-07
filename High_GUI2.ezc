@@ -1,0 +1,186 @@
+easy_c 1.0
+
+library Easy_C
+library Math
+library CV
+require High_GUI2_C
+include "High_GUI2_C.h"
+#include "opencv2/highgui/highgui_c.h"
+load "-lopencv_highgui"
+
+define CV_Capture			# CvCapture *
+    external
+
+define CV_Video_Writer			# CvVideoWriter *
+    external
+
+external null@CV_Capture CV_Capture	# Null {CV_Capture} object
+external null@CV_Video_Writer CV_Video_Writer # Null {CV_Video_Writer} object
+
+external property_pos_msec@CV_Capture Integer
+external property_frames@CV_Capture Integer
+external property_avi_ratio@CV_Capture Integer
+external property_frame_width@CV_Capture Integer
+external property_frame_height@CV_Capture Integer
+external property_fps@CV_Capture Integer
+external property_fourcc@CV_Capture Integer
+external property_frame_count@CV_Capture Integer
+external property_format@CV_Capture Integer
+external property_mode@CV_Capture Integer
+external property_brightness@CV_Capture Integer
+external property_contrast@CV_Capture Integer
+external property_saturation@CV_Capture Integer
+external property_hue@CV_Capture Integer
+external property_gain@CV_Capture Integer
+external property_convert_rgb@CV_Capture Integer
+
+external capture_any@CV Integer
+external capture_mil@CV Integer
+external capture_vfw@CV Integer
+external capture_v4l@CV Integer
+external capture_v4l2@CV Integer
+external capture_fireware@CV Integer
+external capture_firewire@CV Integer
+external capture_ieee1394@CV Integer
+external capture_dc1394@CV Integer
+external capture_cmu1394@CV Integer
+external capture_stereo@CV Integer
+external capture_tyzx@CV Integer
+external tyzx_left@CV Integer
+external tyzx_right@CV Integer
+external tyzx_color@CV Integer
+external capture_tyzx_z@CV Integer
+external capture_qt@CV Integer
+
+routine create_camera_capture@CV
+    takes index Integer
+    returns CV_Capture
+    external cvCreateCameraCapture
+
+    # This routine will return a {CV_Capture} object connected to the
+    # {index}'th camera.  
+
+
+routine create_file_capture@CV
+    takes capture_file_name String
+    returns CV_Capture
+    external CV__create_file_capture
+
+    # This routine will create and return a {CV_Capture} object for
+    # the purpose of reading video from {capture_file_name}.
+
+
+routine create_video_writer@CV
+    takes out_file_name String
+    takes codec Integer
+    takes fps Double
+    takes size CV_Size
+    takes is_color Integer
+    returns CV_Video_Writer
+    external CV__create_video_writer
+
+    # This routine will create and return a {CV_Writer} object for
+    # writing video to {out_file_name} with a frames per second of {fps},
+    # and frame size of {size}.  {codec} specifies the encoder in
+    # Four CC format.  {is_color} specifies the color somehow.
+
+
+routine destroy_window@CV
+    takes window_name String
+    returns_nothing
+    external CV__destroy_window
+
+    # This routine will destroy the window named {window} name and
+    # thereby cause it to disappear from the screen.
+
+routine get_capture_property@CV_Capture
+    takes capture CV_Capture
+    takes property_id Integer
+    returns Double
+    external cvGetCaptureProperty
+
+
+routine set_capture_property@CV_Capture
+    takes capture CV_Capture
+    takes property_id Integer
+    takes property_value Double
+    returns Integer
+    external cvSetCaptureProperty
+
+
+routine load_image@CV
+    takes file_name String
+    takes is_color Integer
+    returns CV_Image
+    external CV__load_image
+
+    # This routine will read in the image from {file_name} and return
+    # it encapsulated in a {CV_Image} object.  {is_color} can be any
+    # combination of {cv_load_image_unchanged@Integer},
+    # {cv_load_image_grayscale@Integer}, {cv_load_image_color@Integer},
+    # {cv_load_image_anydepth@Integer}, or {cv_load_image_anycolor@Integer}.
+
+
+routine named_window@CV
+    takes window_name String
+    takes flags Integer
+    returns Integer
+    external CV__named_window
+
+    # This routine will create a named window with a name of {window_name}
+    # and {flags} specified for its properties.
+
+
+routine query_frame@CV_Capture
+    takes capture CV_Capture
+    returns CV_Image
+    external cvQueryFrame
+
+    # This routine will get the next frame from {capture} and return
+    # it in a {CV_Image} object.
+
+
+routine release_capture@CV_Capture
+    takes capture CV_Capture
+    returns_nothing
+    external CV_Capture__release_capture
+
+    # This routine will release {capture}.
+
+
+routine release_video_writer@CV_Video_Writer
+    takes writer CV_Video_Writer
+    returns_nothing
+    external CV_Video_Writer__release_video_writer
+
+    # This routine will destroy {writer}.
+
+
+routine show_image@CV
+    takes window_name String
+    takes image CV_Image
+    returns_nothing
+    external CV__show_image
+
+    # This routine will render {image} inside of the window name {window_name}.
+
+
+routine wait_key@CV
+    takes delay Integer
+    returns Integer
+    external cvWaitKey
+
+    # This routine will wait for a key event or delay for {delay} milliseconds.
+    # If {delay} is 0, the delay is infinite.
+
+
+routine write_frame@CV_Video_Writer
+    takes writer CV_Video_Writer
+    takes frame CV_Image
+    returns Integer
+    external CV_Video_Writer__write_frame
+
+    # This routine will write {frame} to {writer}.  Some return
+    # value is returned.
+
+
