@@ -2,10 +2,12 @@ CV.c
 CV.h
 Easy_C.*
 Example?
+Example?.[ch]
+High_GUI2.[ch]
+Math.[ch]
 example?
+example?.c
+example?.cpp
 *.avi
-*.c
-*.cpp
-*.h
 *.jpg
 *.o
